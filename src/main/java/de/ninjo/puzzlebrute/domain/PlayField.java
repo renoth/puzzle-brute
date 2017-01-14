@@ -8,6 +8,9 @@ public class PlayField {
 
     Map<Coordinate, Hexfield> hexfieldMap = new HashMap<>();
 
+    public PlayField() {
+    }
+
     public PlayField(int radius) {
         IntStream.rangeClosed(-radius, radius).forEach(x -> {
             IntStream.rangeClosed(-radius, radius).forEach(y -> {
@@ -28,7 +31,6 @@ public class PlayField {
     }
 
     public void occupyFields(Hexfield field, Tile tile) {
-
         field.setOccupied(true);
         field.setOccupant(tile);
 
@@ -39,19 +41,12 @@ public class PlayField {
     }
 
     public void unOccupyFields(Hexfield field, Tile tile) {
-
         field.setOccupied(false);
         field.setOccupant(null);
 
         for (Hexfield tileField : tile.getOccupiedTilesRelativeToRoot()) {
            getFieldAt(field.getPosition().add(tileField.getPosition())).setOccupied(false);
            getFieldAt(field.getPosition().add(tileField.getPosition())).setOccupant(null);
-        }
-    }
-
-    public void clear() {
-        for (Hexfield field : hexfieldMap.values()) {
-            field.setOccupied(false);
         }
     }
 
